@@ -43,6 +43,8 @@ cd python
 pip install .
 ```
 
+Use the requirements.txt file to set up a python environment with all necessary packages installed.
+
 3. Navigate to the `python/` folder. Run the file `main.py` found in the `python/` folder.
 
 ### Instructions
