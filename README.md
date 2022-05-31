@@ -41,7 +41,7 @@ Credit also goes to https://github.com/wpumacay/DeeprlND-projects for adapting c
 
 2. Place the file in the root of the repository and unzip (or decompress) the file. Then, install several dependencies.
 ```bash
-git clone https://github.com/gktval/Multi-Agent AI
+git clone https://github.com/gktval/Multi-Agent-AI
 cd python
 pip install .
 ```
