@@ -89,13 +89,13 @@ Both MADDPG models using priority replay performed better than MADDPG without th
 
 
 The plot of rewards can be found here:
-https://github.com/gktval/Multi-Agent_AI/blob/main/results.png
+[https://github.com/gktval/Multi-Agent_AI/blob/main/results.png](https://github.com/gktval/Multi-Agent-AI/blob/main/results.png)
 
 The scores from each agent can be found here:
-https://github.com/gktval/Multi-Agent_AI/blob/main/python/scores/
+[https://github.com/gktval/Multi-Agent_AI/blob/main/python/scores/](https://github.com/gktval/Multi-Agent-AI/tree/main/scores)
 
 The replay from each agent can be found here:
-https://github.com/gktval/Multi-Agent_AI/blob/main/python/checkpoints/
+[https://github.com/gktval/Multi-Agent_AI/blob/main/python/checkpoints/](https://github.com/gktval/Multi-Agent-AI/tree/main/checkpoints)
 
 ### Future work
 Future work could add other multi-agent algorithms, such as MAPPO. Notably, there were several episodes where the agents would perform a top score of 2.7, but then the next episode they would have a combined average score of 0. As a result, future work should be directed to determine why the agent's scores varied considerably from one episode to the next and how to reduce that. 
