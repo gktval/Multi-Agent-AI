@@ -39,7 +39,7 @@ Credit also goes to https://github.com/wpumacay/DeeprlND-projects for adapting c
 
     (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Linux_NoVis.zip) to obtain the "headless" version of the environment. You will not be able to watch the agent without enabling a virtual screen, but you will be able to train the agent. (To watch the agent, you should follow the instructions to enable a virtual screen, and then download the environment for the Linux operating system above.)
 
-2. Download or clone this repository and place the Unity Tennis environment in the 'p3_collab-compet' folder of the repository and unzip (or decompress) the file. To install the dependencies needed, execulte the code below in a terminal.
+2. Download or clone this repository and place the Unity Tennis environment in the 'p3_collab-compet' folder of the repository and unzip (or decompress) the file. To install the dependencies needed, execute the code below in a terminal.
 ```bash
 cd python
 pip install .
