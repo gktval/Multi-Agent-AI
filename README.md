@@ -28,7 +28,6 @@ Credit also goes to https://github.com/wpumacay/DeeprlND-projects for adapting c
 
 1. Download the environment from the link below.  You need only select the environment that matches your operating system:
 
-    - **_Version 2: Twenty (20) Agents_**
         - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Linux.zip)
         - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis.app.zip)
         - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Windows_x86.zip)
