@@ -11,8 +11,9 @@ There are 2 agents, each with their own model, states and actions. During each i
 The two agents share a replay buffer. During the learning process, actor local actions and the actor target actions are combined for both agents and passed into each of the agents' models. Each agent's critical model will use the combined actor target actions to compute the gradient loss. Likewise, the agent's actor model will compute the gradient loss based on both agent's local actor actions.
 
 The model for the MADDPG is discussed in this paper: https://papers.nips.cc/paper/7217-multi-agent-actor-critic-for-mixed-cooperative-competitive-environments.pdf
-https://github.com/gktval/Multi-Agent_AI/blob/main/multi-agent-actor-critic.png
-Figure 1: Multi-agent decentralized actor with centralized critic (Lowe and Wu et al).
+
+![Pong](multi-agent-actor-critic.png)"Figure 1: Multi-agent decentralized actor with centralized critic (Lowe and Wu et al)."
+
 
 For each step, each agent performs 3 updates. This greatly reduced the number of iterations needed for the agents to learn, but also increased the learning time threefold. 
 

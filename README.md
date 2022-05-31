@@ -1,98 +1,66 @@
-## REPORT
+[//]: # (Image References)
 
-### Introduction
-This project implements and compares three networks for training agents in Unity's Tennis environment. Two networks were tested MADDMP and MA4DPG.
+[image1]: https://video.udacity-data.com/topher/2018/May/5af7955a_tennis/tennis.png "Trained Agent"
 
-### 1. MADDPG Algorithm
-The environments was solved initially with a Multi Agent Deep Deterministic Policy Gradient (MADDPG) algorithm as discussed in this paper https://arxiv.org/pdf/1509.02971.pdf. This base of this model came from project #2 in Udacity's learning program: https://github.com/gktval/Continuous-Control-AI. 
+# Project 3: Collaboration and Competition
 
-There are 2 agents, each with their own model, states and actions. During each iteration, the states are collected from the environment and passed two each agent. Each state consists of 24 state spaces. Of those 24 state spaces, 8 of them are from the current game frame, and 8 each from the two previous frames.
+![Trained Agent][image1]
 
-The two agents share a replay buffer. During the learning process, actor local actions and the actor target actions are combined for both agents and passed into each of the agents' models. Each agent's critical model will use the combined actor target actions to compute the gradient loss. Likewise, the agent's actor model will compute the gradient loss based on both agent's local actor actions.
+This repository contains material related to Udacity's Deep Reinforcement Learning course.
 
-The model for the MADDPG is discussed in this paper: https://papers.nips.cc/paper/7217-multi-agent-actor-critic-for-mixed-cooperative-competitive-environments.pdf
-https://github.com/gktval/Multi-Agent_AI/blob/main/multi-agent-actor-critic.png
-Figure 1: Multi-agent decentralized actor with centralized critic (Lowe and Wu et al).
+### Project Details
 
-For each step, each agent performs 3 updates. This greatly reduced the number of iterations needed for the agents to learn, but also increased the learning time threefold. 
+In this environment, two agents control rackets to bounce a ball over a net. If an agent hits the ball over the net, it receives a reward of +0.1. If an agent lets a ball hit the ground or hits the ball out of bounds, it receives a reward of -0.01. Thus, the goal of each agent is to keep the ball in play.
 
-Gradient clipping was tested on the model, but the results (not shown) were not as desirable as without. Other tests included using different learning rates, how often the models were updated, and the noise sigma. I also tested a variable learning update method based on whether or not the iteration was successful or not. In the end, I found that these parameters were optimal for my agent's learning:
+The observation space consists of 8 variables corresponding to the position and velocity of the ball and racket. Each agent receives its own, local observation. Two continuous actions are available, corresponding to movement toward (or away from) the net, and jumping.
 
-Gamma: 0.99
-Actor Learning Rate: 1e-3
-Critic Learning Rate: 2e-3
-Tau: 1e-3 
-Update Frequency: 1
-Batch Size: 256
-Learns per step:  3
-Noisy Net: Ornstein-Uhlenbeck process
-Noise Decay: 0.985
-Buffer Size: 100000
+The task is episodic, and in order to solve the environment, your agents must get an average score of +0.5 (over 100 consecutive episodes, after taking the maximum over both agents). Specifically,
 
-The MADDPG model was also tested with a priority replay buffer. In the report graph showing the results, there are two lines displaying the MADDPG with priority replay. The first time the model was ran, the learning process was prematurely stopped at 1500 episodes. The second time through, it ran to the full 2000 episodes. Interestingly though, the results varied in the number of episodes it took to complete the challenge (a 150 episode difference).
+    After each episode, we add up the rewards that each agent received (without discounting), to get a score for each agent. This yields 2 (potentially different) scores. We then take the maximum of these 2 scores.
+    This yields a single score for each episode.
 
+The environment is considered solved, when the average (over 100 episodes) of those scores is at least +0.5.
 
-### 2. MAD4PG Algorithm
-The Multi Agent Distributed Distributional Deterministic Policy Gradient (MAD4PG) algorithm is very similar to the MADDPG algorithm with a few exceptions: it uses a prioritized replay buffer, N-step returns, and a distributional critical update. The paper detailing D4PG can be found here: https://openreview.net/forum?id=SyZipzbCb. The paper discusses combining categorical and gaussian operations to predict the critic. In my code, only a categorical operation is achieved on the critic. The atom size was 51, which is used to compute the distributions of the final output from the critic network.
+### Credit
 
-Below are the hyperparameters for training the MAD4PG network:
-Gamma: 0.99
-Actor Learning Rate: 1e-3
-Critic Learning Rate: 2e-3
-Tau: 1e-3 
-Update Frequency: 1
-Batch Size: 256
-Learns per step:  3
-Noisy Net: Ornstein-Uhlenbeck process
-Noise Decay: 0.985
-Buffer Size: 100000
-Tau = 0.001
-N-steps = 5
-Priority Epsilon = .0001
-N_Atoms = 51
-Vmin = -1
-Vmax = 1
+Credit also goes to https://github.com/wpumacay/DeeprlND-projects for adapting code to implement the priority replay buffer.
 
+### Getting Started
 
+1. Download the environment from the link below.  You need only select the environment that matches your operating system:
 
-### 3. Models for MADDPG and MAD4PG
-I wanted the comparison between DDPG and D4PG as close as possible for comparisons. Thus, the models were nearly identical between the two. 
+    - **_Version 2: Twenty (20) Agents_**
+        - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Linux.zip)
+        - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis.app.zip)
+        - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Windows_x86.zip)
+        - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Windows_x86_64.zip)
+    
+    (_For Windows users_) Check out [this link](https://support.microsoft.com/en-us/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) if you need help with determining if your computer is running a 32-bit version or 64-bit version of the Windows operating system.
 
-Actor 
-    Hidden 1: (input, 128) - ReLU
-    Hidden 2: (128, 128) - ReLU
-    Output: (128, 4) - TanH
+    (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P3/Tennis/Tennis_Linux_NoVis.zip) to obtain the "headless" version of the environment. You will not be able to watch the agent without enabling a virtual screen, but you will be able to train the agent. (To watch the agent, you should follow the instructions to enable a virtual screen, and then download the environment for the Linux operating system above.)
 
-Critic
-    Hidden 1: (input, 128) - Linear
-    Hidden 2: (128, 256) - Linear
-    Hidden 3: (256, 128) - Linear
-    Hidden 4: (128, 32) - Linear
-    Output: (32, 1 [51]) - Linear
+2. Place the file in the root of the repository and unzip (or decompress) the file. Then, install several dependencies.
+```bash
+git clone https://github.com/gktval/Multi-Agent AI
+cd python
+pip install .
+```
 
-In the MAD4PG model, the output was 51, which is equal to the number of atoms for the distribution update.
+3. Navigate to the `python/` folder. Run the file `main.py` found in the `python/` folder.
+
+### Instructions
+
+Running the code without any changes will start a unity session and train the multi-DDPG agent. Alternatively, you can change the agent model in the run method. The following agents are available as options:
+
+    MADDPG
+    MAD4PG
 
 
-### Results
-The results of the training will be stored in a folder called `scores` location in the `python` folder. After running several of the deep neural networks, you can replay the trained agent by changing the `isTest` variable passed into the `run()` method. 
+In the initialization method of main.py, you can change the type of network to run. This will take you to the 'Run' method in the maddpg and mad4pg files. In the 'Run' method, you can change the configuration and parameters for each of the networks. In the config file, you can also find addition parameters for each of the networks. 
 
-Each of the algorithms described above achieved an average score of +0.5 over 100 episodes as listed below:
-MADDPG - 845 episodes
-MADDPG with PER (1) - 792
-MADDPG with PER (2) - 691
-MAD4PG - 1061 episodes
+The scores of the training will be stored in a folder called `scores`. Saved agents will be stored in a folder called `checkpoints`. After running several of the networks, you can replay the trained agent by changing the `isTest` variable from the initialization in main.py
 
-Both MADDPG models using priority replay performed better than MADDPG without the priority replay buffer. A lot variables were testing to make the MA4DPG algorithm perform well, but ultimately, the best I could accomplish was completing the environment in 1061 episodes. This model also had the lowest average scores and seemed to progressively do worse as more episodes were completed.
+### Report
+This graph shows the scores of the various trained agents used in this project. All the networks achieved the score of +0.5 for 100 episodes. You can read more in Report.md about the comparisons and the values used to configure each.
 
-
-The plot of rewards can be found here:
-https://github.com/gktval/Multi-Agent_AI/blob/main/results.png
-The scores from each agent can be found here:
-https://github.com/gktval/Multi-Agent_AI/blob/main/python/scores/
-The replay from each agent can be found here:
-https://github.com/gktval/Multi-Agent_AI/blob/main/python/checkpoints/
-
-### Future work
-Future work could add other multi-agent algorithms, such as MAPPO. Notably, there were several episodes where the agents would perform a top score of 2.7, but then the next episode they would have a combined average score of 0. As a result, future work should be directed to determine why the agent's scores varied considerably from one episode to the next and how to reduce that. 
-
-Furthermore, as presented in the D4PG research article, a gaussian distribution could be used to improve the loss. A lot of work is needed to improve the fine tuning of the model and the efficiency of the D4PG model.
+![Pong](results.png)"Scores of trained agents and rolling averages"
