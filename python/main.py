@@ -146,7 +146,7 @@ def showScores():
 
 if __name__ == '__main__':
     # Set options to activate or deactivate the game view, and its speed 
-    #run(isTest = True, dqnType= model_types.maddpg)
+    run(isTest = True, dqnType= model_types.maddpg)
 
     #show all scores in scores folder
-    showScores()
+    #showScores()
